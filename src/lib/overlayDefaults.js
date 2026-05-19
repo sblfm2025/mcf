@@ -28,6 +28,7 @@ export const defaultOverlayState = {
     performerName: "Tari Pattuqduq",
     groupName: "Sanggar Seni Mandar",
     logoPath: "/aset/logo/event/logo-mcf-ken.png",
+    photoPath: "/aset/maskot/maskot-tari.png",
     category: "Tari Tradisional",
     layout: "logo-left",
     animation: "fade-scale",

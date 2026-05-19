@@ -10,7 +10,8 @@
   color: #17110d;
   background: var(--cream);
   font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    "Aptos Display", "Segoe UI Variable Display", "Plus Jakarta Sans", Inter, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 * {
@@ -37,6 +38,7 @@ textarea {
   background: var(--cream);
   color: var(--ink);
   isolation: isolate;
+  letter-spacing: 0;
 }
 
 .overlay-main {
@@ -158,7 +160,7 @@ textarea {
   margin: 0 0 0.5vh;
   color: #7f1c22;
   font-size: clamp(16px, 1.25vw, 24px);
-  font-weight: 800;
+  font-weight: 760;
   text-transform: uppercase;
 }
 
@@ -167,8 +169,9 @@ textarea {
   color: #7f1c22;
   max-width: 82vw;
   font-size: clamp(54px, 4.05vw, 78px);
-  font-weight: 950;
-  line-height: 0.92;
+  font-weight: 880;
+  line-height: 0.94;
+  letter-spacing: -0.01em;
 }
 
 .main-stage {
@@ -180,12 +183,12 @@ textarea {
 
 .lower-third {
   display: grid;
-  width: min(78vw, 1420px);
+  width: min(76vw, 1380px);
   min-height: 25vh;
   align-items: center;
   border: 1px solid rgba(196, 154, 74, 0.58);
   border-top: 3px solid rgba(196, 154, 74, 0.82);
-  border-radius: 22px;
+  border-radius: 24px;
   background:
     linear-gradient(135deg, rgba(255, 250, 240, 0.98), rgba(255, 247, 232, 0.9)),
     repeating-linear-gradient(135deg, rgba(185, 137, 60, 0.04) 0 1px, transparent 1px 20px);
@@ -200,14 +203,46 @@ textarea {
 }
 
 .performer-card {
-  grid-template-columns: 0.8fr 3fr;
-  gap: 3vw;
-  padding: 3vh 3vw;
+  grid-template-columns: minmax(190px, 0.68fr) minmax(0, 2.2fr) minmax(92px, 0.36fr);
+  gap: 2.4vw;
+  padding: 2.7vh 3vw;
 }
 
-.performer-card > img {
-  width: 16vw;
-  height: 16vw;
+.performer-visual {
+  display: grid;
+  width: min(17vw, 270px);
+  height: 22vh;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 50% 52%, rgba(255, 255, 255, 0.96), rgba(255, 242, 214, 0.52) 62%, transparent 72%),
+    rgba(255, 250, 240, 0.58);
+  filter: drop-shadow(0 24px 28px rgba(64, 31, 20, 0.15));
+  mask-image: linear-gradient(180deg, #000 84%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 84%, transparent 100%);
+}
+
+.performer-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.performer-copy {
+  align-self: center;
+  min-width: 0;
+}
+
+.performer-logo-mark {
+  display: grid;
+  width: clamp(80px, 6vw, 116px);
+  height: clamp(80px, 6vw, 116px);
+  place-items: center;
+  align-self: center;
+  justify-self: end;
+  opacity: 0.9;
 }
 
 .segment-label {
@@ -220,7 +255,7 @@ textarea {
   background: #7f1c22;
   color: #fff7e8;
   font-size: clamp(18px, 1.05vw, 22px);
-  font-weight: 900;
+  font-weight: 840;
   letter-spacing: 0;
   text-transform: uppercase;
 }
@@ -236,7 +271,7 @@ textarea {
   margin: 1.1vh 0 0;
   color: #7f1c22;
   font-size: clamp(52px, 3.35vw, 64px);
-  font-weight: 950;
+  font-weight: 860;
   line-height: 0.98;
   text-wrap: balance;
 }
@@ -263,14 +298,14 @@ textarea {
   margin: 1.2vh 0 0;
   color: #241814;
   font-size: clamp(28px, 1.8vw, 34px);
-  font-weight: 800;
+  font-weight: 740;
 }
 
 .lower-third p {
   margin: 0.6vh 0 0;
   color: #6c4a2b;
   font-size: clamp(22px, 1.45vw, 28px);
-  font-weight: 700;
+  font-weight: 650;
 }
 
 .speaker-photo {
@@ -292,16 +327,35 @@ textarea {
 
 .next-event {
   width: min(78vw, 1200px);
-  padding: 5vh 5vw;
-  border-left: 12px solid #b9893c;
-  background: rgba(255, 250, 240, 0.92);
+  padding: 6vh 5vw;
+  border-left: 0;
+  border-top: 3px solid rgba(196, 154, 74, 0.78);
+  border-radius: 24px;
+  background:
+    linear-gradient(135deg, rgba(127, 28, 34, 0.96), rgba(49, 25, 23, 0.94)),
+    var(--bg-image) center / cover;
+  color: #fff7e8;
+  text-align: center;
+  box-shadow: 0 26px 70px rgba(60, 24, 18, 0.22);
 }
 
 .next-event span {
-  color: #7f1c22;
+  color: rgba(240, 202, 120, 0.95);
   font-size: clamp(18px, 2vw, 36px);
   font-weight: 900;
   text-transform: uppercase;
+}
+
+.next-event h2 {
+  color: #fff7e8;
+}
+
+.next-event p {
+  color: #f0ca78;
+}
+
+.scene-enter {
+  transform-origin: center bottom;
 }
 
 .sponsor-strip {
@@ -425,6 +479,21 @@ textarea {
     var(--bg-image) center / cover;
   color: #fff7e8;
   text-align: center;
+  overflow: hidden;
+}
+
+.fullscreen-transition::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(196, 154, 74, 0.22), transparent 32%),
+    linear-gradient(140deg, rgba(127, 28, 34, 0.3), rgba(33, 23, 20, 0.42));
+}
+
+.fullscreen-transition > div {
+  position: relative;
+  z-index: 1;
 }
 
 .transition-logo {
@@ -437,8 +506,9 @@ textarea {
   margin: 0;
   color: #fff7e8;
   font-size: clamp(64px, 8vw, 150px);
-  font-weight: 950;
-  line-height: 0.9;
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.015em;
 }
 
 .fullscreen-transition h2 {
@@ -467,6 +537,11 @@ textarea {
   padding: 2vh 8vw 18vh;
 }
 
+.side-stack {
+  display: grid;
+  gap: 2.2vh;
+}
+
 .side-photo {
   width: 100%;
   height: 29vh;
@@ -490,7 +565,13 @@ textarea {
 .side-photo.clean {
   display: grid;
   place-items: center;
-  padding: 4vh 4vw;
+  padding: 3vh 4vw;
+}
+
+.performer-side-photo {
+  background:
+    radial-gradient(circle at 50% 54%, rgba(255, 255, 255, 0.96), rgba(255, 240, 210, 0.48) 62%, transparent 76%),
+    rgba(255, 250, 240, 0.6);
 }
 
 .side-title {
@@ -505,7 +586,7 @@ textarea {
 .side-next small {
   color: #7f1c22;
   font-size: clamp(15px, 2vw, 26px);
-  font-weight: 950;
+  font-weight: 820;
   text-transform: uppercase;
 }
 
@@ -513,7 +594,8 @@ textarea {
   margin: 1vh 0;
   color: #7f1c22;
   font-size: clamp(34px, 4.2vw, 58px);
-  font-weight: 950;
+  font-weight: 850;
+  letter-spacing: -0.01em;
   line-height: 0.98;
 }
 
@@ -524,7 +606,7 @@ textarea {
 .side-title p {
   margin: 0;
   font-size: clamp(18px, 3vw, 34px);
-  font-weight: 800;
+  font-weight: 720;
 }
 
 .side-next {
@@ -645,7 +727,9 @@ textarea {
   top: 0;
   height: 100vh;
   padding: 22px;
-  background: #251817;
+  background:
+    linear-gradient(180deg, rgba(37, 24, 23, 0.98), rgba(28, 16, 15, 1)),
+    url("/aset/background/bg-3.png") center / cover;
   color: #fff7e8;
 }
 
@@ -705,6 +789,7 @@ textarea {
   margin: 0;
   color: #221715;
   font-size: 34px;
+  font-weight: 520;
   line-height: 1;
 }
 
@@ -742,7 +827,7 @@ textarea {
   background: #fffaf0;
   color: #251817;
   cursor: pointer;
-  font-weight: 850;
+  font-weight: 760;
 }
 
 .segment-button.is-active {
@@ -838,6 +923,7 @@ textarea {
 
 .launch-tile strong {
   font-size: 20px;
+  font-weight: 680;
 }
 
 .launch-tile span {
@@ -1192,6 +1278,7 @@ textarea {
 .auth-card h1 {
   margin: 0;
   font-size: 30px;
+  font-weight: 560;
 }
 
 .auth-card label {

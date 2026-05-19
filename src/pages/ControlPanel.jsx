@@ -242,6 +242,7 @@ function ControlPanelContent() {
               <TextInput label="Sanggar/Komunitas" value={draft.performer.groupName} onChange={(value) => patch(["performer", "groupName"], value)} />
               <TextInput label="Kategori" value={draft.performer.category} onChange={(value) => patch(["performer", "category"], value)} />
               <AssetPicker label="Pilih Logo Penampil" category="eventLogos" value={draft.performer.logoPath} onChange={(value) => patch(["performer", "logoPath"], value)} />
+              <AssetPicker label="Pilih Foto Penampil" category="mascots" value={draft.performer.photoPath} onChange={(value) => patch(["performer", "photoPath"], value)} />
             </div>
           )}
 

@@ -1,0 +1,20 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    function operator() {
+      return request.auth != null && (
+        request.auth.token.role in ['admin', 'operator'] ||
+        request.auth.token.email == 'asalada09@gmail.com' ||
+        request.auth.token.email_verified == true
+      );
+    }
+
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if operator()
+        && request.resource.size < 2 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+  }
+}

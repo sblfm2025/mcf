@@ -10,7 +10,7 @@ export default function SponsorStrip({ sponsor, className = "" }) {
         {sponsors.slice(0, 5).map((item) => (
           <figure key={`${item.name}-${item.logoPath}`} className="sponsor-logo-item">
             <img src={item.logoPath} alt={item.name} />
-            <figcaption>{item.name}</figcaption>
+            {sponsor.showNames && <figcaption>{item.name}</figcaption>}
           </figure>
         ))}
       </div>

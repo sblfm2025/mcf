@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Eye, MonitorPlay, RotateCcw, Save, ShieldCheck, UploadCloud } from "lucide-react";
+import { Activity, Eye, MonitorPlay, RadioTower, RotateCcw, Save, ShieldCheck, UploadCloud } from "lucide-react";
 import AuthGate from "../components/control/AuthGate.jsx";
 import AssetPicker from "../components/control/AssetPicker.jsx";
 import TextInput from "../components/control/TextInput.jsx";
@@ -11,7 +11,7 @@ import { deepMerge, saveOverlayState } from "../lib/stateStore.js";
 import { useOverlayData } from "../hooks/useOverlayData.js";
 
 const tabs = [
-  "Dashboard",
+  "Live Control",
   "Sambutan",
   "Penampil",
   "Running Text",
@@ -35,7 +35,7 @@ export default function ControlPanel() {
 function ControlPanelContent() {
   const liveState = useOverlayData();
   const [draft, setDraft] = useState(liveState);
-  const [activeTab, setActiveTab] = useState("Dashboard");
+  const [activeTab, setActiveTab] = useState("Live Control");
   const [status, setStatus] = useState("Siap");
 
   useEffect(() => setDraft(liveState), [liveState]);
@@ -159,28 +159,52 @@ function ControlPanelContent() {
         </nav>
 
         <section className="panel-surface">
-          {activeTab === "Dashboard" && (
-            <div className="dashboard-grid">
-              <a href="/overlay/main" target="_blank" rel="noreferrer" className="launch-tile">
-                <MonitorPlay size={22} />
-                <strong>Main 6:4</strong>
-                <span>/overlay/main</span>
-              </a>
-              <a href="/overlay/left" target="_blank" rel="noreferrer" className="launch-tile">
-                <MonitorPlay size={22} />
-                <strong>Left 2:3</strong>
-                <span>/overlay/left</span>
-              </a>
-              <a href="/overlay/right" target="_blank" rel="noreferrer" className="launch-tile">
-                <MonitorPlay size={22} />
-                <strong>Right 2:3</strong>
-                <span>/overlay/right</span>
-              </a>
-              <a href="/preview" target="_blank" rel="noreferrer" className="launch-tile">
-                <Eye size={22} />
-                <strong>Preview</strong>
-                <span>Semua layar</span>
-              </a>
+          {activeTab === "Live Control" && (
+            <div className="control-room">
+              <div className="live-preview-panel">
+                <iframe title="Live main preview" src="/overlay/main" />
+              </div>
+              <div className="quick-panel">
+                <div className="control-metric">
+                  <Activity size={18} />
+                  <span>Active Scene</span>
+                  <strong>{draft.activeScene}</strong>
+                </div>
+                <div className="control-metric">
+                  <RadioTower size={18} />
+                  <span>Firebase</span>
+                  <strong>{firebaseEnabled ? "Online" : "Local"}</strong>
+                </div>
+                <div className="preset-grid compact">
+                  {scenePresets.map((preset) => (
+                    <button type="button" key={preset.id} onClick={() => applyPreset(preset)}>
+                      {preset.label.replace("Preset ", "")}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="dashboard-grid">
+                <a href="/overlay/main" target="_blank" rel="noreferrer" className="launch-tile">
+                  <MonitorPlay size={22} />
+                  <strong>Main 6:4</strong>
+                  <span>/overlay/main</span>
+                </a>
+                <a href="/overlay/left" target="_blank" rel="noreferrer" className="launch-tile">
+                  <MonitorPlay size={22} />
+                  <strong>Left 2:3</strong>
+                  <span>/overlay/left</span>
+                </a>
+                <a href="/overlay/right" target="_blank" rel="noreferrer" className="launch-tile">
+                  <MonitorPlay size={22} />
+                  <strong>Right 2:3</strong>
+                  <span>/overlay/right</span>
+                </a>
+                <a href="/preview" target="_blank" rel="noreferrer" className="launch-tile">
+                  <Eye size={22} />
+                  <strong>Preview</strong>
+                  <span>Semua layar</span>
+                </a>
+              </div>
             </div>
           )}
 
@@ -367,6 +391,15 @@ function ControlPanelContent() {
               <TextInput label="Judul Event" value={draft.event.title} onChange={(value) => patch(["event", "title"], value)} />
               <TextInput label="Venue" value={draft.event.venue} onChange={(value) => patch(["event", "venue"], value)} />
               <TextInput label="Tanggal" value={draft.event.date} onChange={(value) => patch(["event", "date"], value)} />
+              <label className="field">
+                <span>Mode Desain</span>
+                <select value={draft.event.designMode || "elegant-international"} onChange={(event) => patch(["event", "designMode"], event.target.value)}>
+                  <option value="elegant-international">Elegant International</option>
+                  <option value="cultural-premium">Cultural Premium</option>
+                  <option value="minimal-broadcast">Minimal Broadcast</option>
+                  <option value="festival-dynamic">Festival Dynamic</option>
+                </select>
+              </label>
               <AssetPicker label="Pilih Background" category="backgrounds" value={draft.event.backgroundPath} onChange={(value) => patch(["event", "backgroundPath"], value)} />
               <AssetPicker label="Pilih Logo Event" category="eventLogos" value={draft.event.logoPath} onChange={(value) => patch(["event", "logoPath"], value)} />
               <AssetPicker label="Pilih Maskot" category="mascots" value={draft.event.mascotPath} onChange={(value) => patch(["event", "mascotPath"], value)} />

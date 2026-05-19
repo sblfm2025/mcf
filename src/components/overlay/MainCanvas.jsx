@@ -3,6 +3,7 @@ import FitImage from "../common/FitImage.jsx";
 import FullScreenTransition from "./FullScreenTransition.jsx";
 import RunningText from "./RunningText.jsx";
 import SponsorStrip from "./SponsorStrip.jsx";
+import { formatNameLines, nameSizeClass } from "../../lib/typography.js";
 
 export default function MainCanvas({ state }) {
   const { event, speaker, performer, runningText, sponsor, mediaPartner, schedule, transition, activeScene } = state;
@@ -10,7 +11,7 @@ export default function MainCanvas({ state }) {
   const showPerformer = performer.active && activeScene === "penampil";
 
   return (
-    <main className="overlay-screen overlay-main" style={{ "--bg-image": `url("${event.backgroundPath}")` }}>
+    <main className={`overlay-screen overlay-main mode-${event.designMode || "elegant-international"}`} style={{ "--bg-image": `url("${event.backgroundPath}")` }}>
       <div className="broadcast-bg" />
       <header className="overlay-header">
         <FitImage src={event.logoPath} alt={event.title} />
@@ -24,14 +25,18 @@ export default function MainCanvas({ state }) {
       <section className="main-stage">
         {showSpeaker && (
           <motion.article className="lower-third speaker-card light-sweep" initial={{ y: 42, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
-            <div className="segment-label">SAMBUTAN</div>
-            <div className="speaker-copy">
-              <h2>{speaker.name}</h2>
-              <h3>{speaker.title}</h3>
-              <p>{speaker.subtitle}</p>
-            </div>
             <div className="speaker-photo">
               <FitImage src={speaker.photoPath} alt={speaker.name} mode="cover" />
+            </div>
+            <div className="speaker-copy">
+              <div className="segment-label">SAMBUTAN</div>
+              <h2 className={nameSizeClass(speaker.name)}>
+                {formatNameLines(speaker.name, 2).map((line) => (
+                  <span key={line}>{line}</span>
+                ))}
+              </h2>
+              <h3>{speaker.title}</h3>
+              <p>{speaker.subtitle}</p>
             </div>
           </motion.article>
         )}
@@ -41,7 +46,11 @@ export default function MainCanvas({ state }) {
             <FitImage src={performer.logoPath} alt={performer.groupName} />
             <div>
               <div className="segment-label">{performer.category}</div>
-              <h2>{performer.performerName}</h2>
+              <h2 className={nameSizeClass(performer.performerName)}>
+                {formatNameLines(performer.performerName, 2).map((line) => (
+                  <span key={line}>{line}</span>
+                ))}
+              </h2>
               <h3>{performer.groupName}</h3>
             </div>
           </motion.article>

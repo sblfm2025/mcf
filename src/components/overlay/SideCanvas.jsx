@@ -1,13 +1,14 @@
 import FitImage from "../common/FitImage.jsx";
 import RunningText from "./RunningText.jsx";
 import SponsorStrip from "./SponsorStrip.jsx";
+import { formatNameLines, nameSizeClass } from "../../lib/typography.js";
 
 export default function SideCanvas({ state, side = "left" }) {
   const { event, speaker, performer, schedule, sponsor, mediaPartner, runningText } = state;
   const isLeft = side === "left";
 
   return (
-    <main className="overlay-screen overlay-side" style={{ "--bg-image": `url("${event.backgroundPath}")` }}>
+    <main className={`overlay-screen overlay-side mode-${event.designMode || "elegant-international"}`} style={{ "--bg-image": `url("${event.backgroundPath}")` }}>
       <div className="broadcast-bg" />
       <header className="side-header">
         <FitImage src={event.logoPath} alt={event.title} />
@@ -22,7 +23,11 @@ export default function SideCanvas({ state, side = "left" }) {
             </div>
             <div className="side-title">
               <span>SAMBUTAN</span>
-              <h1>{speaker.name}</h1>
+              <h1 className={nameSizeClass(speaker.name)}>
+                {formatNameLines(speaker.name, 2).map((line) => (
+                  <span key={line}>{line}</span>
+                ))}
+              </h1>
               <p>{speaker.title}</p>
             </div>
           </>
@@ -33,7 +38,11 @@ export default function SideCanvas({ state, side = "left" }) {
             </div>
             <div className="side-title">
               <span>{performer.category}</span>
-              <h1>{performer.performerName}</h1>
+              <h1 className={nameSizeClass(performer.performerName)}>
+                {formatNameLines(performer.performerName, 2).map((line) => (
+                  <span key={line}>{line}</span>
+                ))}
+              </h1>
               <p>{performer.groupName}</p>
             </div>
             <div className="side-next">

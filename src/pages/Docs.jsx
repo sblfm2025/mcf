@@ -67,6 +67,23 @@ export default function Docs() {
       </section>
 
       <section>
+        <h2>Quality Checklist</h2>
+        <p>
+          Pastikan `/overlay/*` tanpa scrollbar, tidak ada teks terpotong, gambar memakai object-fit yang benar, ticker tidak menutup
+          konten penting, dan preview sama dengan output OBS.
+        </p>
+      </section>
+
+      <section>
+        <h2>Mode Desain</h2>
+        <p>Default visual memakai Elegant International. Mode lain tersedia di Control Panel bagian Tampilan.</p>
+        <code>Elegant International</code>
+        <code>Cultural Premium</code>
+        <code>Minimal Broadcast</code>
+        <code>Festival Dynamic</code>
+      </section>
+
+      <section>
         <h2>Asset Lokal</h2>
         <p>Semua gambar utama berada di `public/aset` dan dipanggil melalui URL `/aset/...`.</p>
       </section>

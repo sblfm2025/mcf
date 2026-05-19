@@ -10,6 +10,7 @@ export const defaultOverlayState = {
     backgroundPath: "/aset/background/bg-3.png",
     mascotPath: "/aset/maskot/maskot-salam.png",
     motifPath: "/aset/background/bg-3.png",
+    designMode: "elegant-international",
   },
   activeScene: "sambutan",
   speaker: {

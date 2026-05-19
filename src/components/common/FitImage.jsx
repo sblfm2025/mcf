@@ -1,5 +1,9 @@
+import { useState } from "react";
+
 export default function FitImage({ src, alt = "", mode = "contain", className = "" }) {
-  if (!src) return null;
+  const [failed, setFailed] = useState(false);
+
+  if (!src || failed) return null;
 
   return (
     <img
@@ -7,6 +11,7 @@ export default function FitImage({ src, alt = "", mode = "contain", className = 
       alt={alt}
       className={`${mode === "cover" ? "photo-fit" : "logo-fit"} ${className}`}
       draggable="false"
+      onError={() => setFailed(true)}
     />
   );
 }

@@ -1,4 +1,4 @@
-import { doc, onSnapshot, setDoc } from "firebase/firestore";
+import { doc, onSnapshot, serverTimestamp, setDoc } from "firebase/firestore";
 import { db, firebaseEnabled } from "./firebase.js";
 import { defaultOverlayState, eventId } from "./overlayDefaults.js";
 
@@ -17,6 +17,17 @@ export function readLocalState() {
 export function writeLocalState(nextState) {
   localStorage.setItem(storageKey, JSON.stringify(nextState));
   window.dispatchEvent(new CustomEvent("overlay-state-change", { detail: nextState }));
+}
+
+function withLocalMeta(nextState) {
+  return {
+    ...nextState,
+    meta: {
+      ...(nextState.meta || {}),
+      updatedAt: new Date().toISOString(),
+      updatedBy: "local-operator",
+    },
+  };
 }
 
 export function subscribeOverlayState(callback) {
@@ -45,10 +56,22 @@ export function subscribeOverlayState(callback) {
 }
 
 export async function saveOverlayState(nextState) {
-  writeLocalState(nextState);
+  const localState = withLocalMeta(nextState);
+  writeLocalState(localState);
   if (firebaseEnabled && db) {
     try {
-      await setDoc(doc(db, ...docPath), nextState, { merge: true });
+      await setDoc(
+        doc(db, ...docPath),
+        {
+          ...nextState,
+          meta: {
+            ...(nextState.meta || {}),
+            updatedAt: serverTimestamp(),
+            updatedBy: "operator",
+          },
+        },
+        { merge: true },
+      );
       return { ok: true, mode: "firebase" };
     } catch (error) {
       return { ok: false, mode: "local", error };

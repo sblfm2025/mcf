@@ -136,6 +136,18 @@ function ControlPanelContent() {
     );
   }
 
+  function formatLastUpdate(value) {
+    if (!value) return "Belum ada";
+    const date = typeof value.toDate === "function" ? value.toDate() : new Date(value);
+    if (Number.isNaN(date.getTime())) return "Belum ada";
+    return date.toLocaleString("id-ID", {
+      day: "2-digit",
+      month: "short",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+
   return (
     <main className="workspace control-page">
       <div className="topbar">
@@ -174,6 +186,11 @@ function ControlPanelContent() {
                   <RadioTower size={18} />
                   <span>Firebase</span>
                   <strong>{firebaseEnabled ? "Online" : "Local"}</strong>
+                </div>
+                <div className="control-metric">
+                  <ShieldCheck size={18} />
+                  <span>Last Update</span>
+                  <strong>{formatLastUpdate(draft.meta?.updatedAt)}</strong>
                 </div>
                 <div className="preset-grid compact">
                   {scenePresets.map((preset) => (
